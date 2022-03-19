@@ -1,0 +1,35 @@
+package main
+
+import (
+	"Client/model"
+	"html/template"
+	"net/http"
+)
+
+func Start(mem *model.Cashe) {
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "static/index.html")
+	})
+
+	http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
+		data := r.FormValue("order")
+		if data == "" {
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+		}
+		mem.RLock()
+		if Order, ok := mem.Memory[data]; ok {
+			//http.Redirect(w, r, "/data", http.StatusSeeOther)
+			t, err := template.ParseFiles("static/search.html")
+			if err != nil {
+				http.Error(w, "Не удалось:"+err.Error(), http.StatusInternalServerError)
+			}
+			t.Execute(w, Order)
+		} else {
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+		}
+
+		mem.RUnlock()
+	})
+
+}
