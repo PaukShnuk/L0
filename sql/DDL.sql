@@ -1,5 +1,4 @@
-
-//////////////////sql-functions///////////////////
+-------------------sql-functions------------------------
 
 
 CREATE OR REPLACE FUNCTION public.adddeliverydata(name character varying, phone character varying, zip character varying, city character varying, address character varying, region character varying, email character varying)
@@ -43,10 +42,10 @@ AS $function$
 $function$
 ;
 
-/////////////////////////////////////////////////////////
+------------------------------------------------------------------
 
 
-///////////////////////tables////////////////////////////
+--------------------------tables----------------------------------
 CREATE TABLE public.delivery (
 	phone varchar NOT NULL,
 	zip varchar NOT NULL,
