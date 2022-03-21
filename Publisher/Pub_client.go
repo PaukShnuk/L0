@@ -70,8 +70,8 @@ const (
 
 func main() {
 	sc, _ := stan.Connect(clusterName, clientName) // Simple Synchronous Publisher
-	for i := 1; i < 6; i++ {
-		filename := "/home/shnuk/GolandProjects/WB_Train/Publisher/model" + strconv.Itoa(i) + ".json"
+	for i := 1; i < 8; i++ {
+		filename := "/home/shnuk/GolandProjects/WB/wb_l0/Publisher/model" + strconv.Itoa(i) + ".json"
 		file, err := os.Open(filename)
 		if err != nil {
 			log.Fatal(err)
@@ -83,7 +83,7 @@ func main() {
 		msg := data
 		sc.Publish("foo", msg)
 		file.Close()
-		time.Sleep(3 * time.Second)
+		time.Sleep(5 * time.Second)
 	}
 
 	sc.Close()

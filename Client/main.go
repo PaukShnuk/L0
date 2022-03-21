@@ -20,7 +20,7 @@ func main() {
 	}
 	defer sc.Close()
 
-	err = SubscribeMsg(sc, mem)
+	err = MsgProcessing(sc, mem)
 	if err != nil {
 		log.Fatal(err)
 	}

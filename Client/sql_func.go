@@ -19,11 +19,11 @@ func SetDataToDB(data model.Order) error {
 
 	tx, err := db.Begin()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(fmt.Errorf("transaction error", err))
 	}
 	defer tx.Rollback()
 
-	result, err := db.Exec("select adddeliverydata($1,$2,$3,$4,$5,$6,$7)", data.Delivery.Name,
+	result, err := tx.Exec("select adddeliverydata($1,$2,$3,$4,$5,$6,$7)", data.Delivery.Name,
 		data.Delivery.Phone, data.Delivery.Zip, data.Delivery.City, data.Delivery.Address, data.Delivery.Region,
 		data.Delivery.Email)
 	if err != nil {
@@ -31,7 +31,7 @@ func SetDataToDB(data model.Order) error {
 	}
 	fmt.Println(result.RowsAffected())
 
-	result, err = db.Exec("select addpaymentdata($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)", data.Payment.Transaction,
+	result, err = tx.Exec("select addpaymentdata($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)", data.Payment.Transaction,
 		data.Payment.RequestId, data.Payment.Currency, data.Payment.Provider, data.Payment.Amount,
 		data.Payment.PaymentDt, data.Payment.Bank, data.Payment.DeliveryCost, data.Payment.GoodsTotal,
 		data.Payment.CustomFee)
@@ -40,7 +40,7 @@ func SetDataToDB(data model.Order) error {
 	}
 	fmt.Println(result.RowsAffected())
 
-	result, err = db.Exec("select addorderdata($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)", data.OrderUid,
+	result, err = tx.Exec("select addorderdata($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)", data.OrderUid,
 		data.TrackNumber, data.Entry, data.Payment.Transaction, data.Locale, data.InternalSignature,
 		data.CustomerId, data.DeliveryService, data.Shardkey, data.SmId, data.DateCreated, data.OofShard)
 	if err != nil {
@@ -49,7 +49,7 @@ func SetDataToDB(data model.Order) error {
 	fmt.Println(result.RowsAffected())
 
 	for i, _ := range data.Items {
-		result, err = db.Exec("select additemdata($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)", data.OrderUid,
+		result, err = tx.Exec("select additemdata($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)", data.OrderUid,
 			data.Items[i].ChrtId, data.Items[i].TrackNumber, data.Items[i].Price, data.Items[i].Rid, data.Items[i].Name,
 			data.Items[i].Sale, data.Items[i].Size, data.Items[i].TotalPrice, data.Items[i].NmId,
 			data.Items[i].Brand, data.Items[i].Status)

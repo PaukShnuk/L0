@@ -27,7 +27,7 @@ func ConnectNatsStream() (stan.Conn, error) {
 	return sc, nil
 }
 
-func SubscribeMsg(sc stan.Conn, cache *model.Cashe) error {
+func MsgProcessing(sc stan.Conn, cache *model.Cashe) error {
 	handler := func(msg *stan.Msg) {
 		var newItem model.Order
 		if err := msg.Ack(); err != nil {
@@ -36,20 +36,17 @@ func SubscribeMsg(sc stan.Conn, cache *model.Cashe) error {
 		//
 		err := json.Unmarshal(msg.Data, &newItem)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(fmt.Errorf("Bad nats message %s", err))
+			return
 		}
-
-		cache.Lock()
-		defer cache.Unlock()
-		cache.Memory[newItem.OrderUid] = newItem
-
 		err = SetDataToDB(newItem)
 		if err != nil {
-			fmt.Errorf("error with wriring to DB", err)
+			fmt.Println("error with wriring to DB", err)
 		}
-
-		//
-		fmt.Println("Number of message: ", msg)
+		cache.Lock()
+		cache.Memory[newItem.OrderUid] = newItem
+		cache.Unlock()
+		//fmt.Println("Message: ", msg)
 	}
 
 	_, err := sc.Subscribe("foo", handler, stan.DurableName(subscriberName), stan.SetManualAckMode())

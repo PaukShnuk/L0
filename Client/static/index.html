@@ -11,13 +11,21 @@
 <body>
 <div class="container">
     <div class="mx-auto" style="width: 90%;">
-    <h1 CLASS="display-4">Input order id</h1>
+        <div class="p-3">
+            <h1 CLASS="display-4">Input order id</h1>
+        </div>
     <form action="/search" method="get">
-        <input type="text" name="order" id="order" placeholder="Введите номер заказа" class="form-control">
-        <div class="btn_padding">
+        <div class="row">
+            <div class="col">
+                <div class="p-3">
+                    <input type="text" name="order" id="order" placeholder="Введите номер заказа" class="form-control">
+                </div>
+            </div>
+            <div class="col col-lg-2">
             <div class="p-3">
           <button type="submit" class="btn btn-dark">Найти</button>
             </div>
+        </div>
         </div>
     </form>
     </div>
