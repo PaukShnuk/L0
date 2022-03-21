@@ -118,7 +118,7 @@ func GetDataFromDB(cache *model.Cashe) error {
 		if err != nil {
 			return fmt.Errorf("Error getting rows from items:", err)
 		}
-		defer itemsRows.Close()
+		data.Items = []model.Items{}
 		for itemsRows.Next() {
 			item := model.Items{}
 			err = itemsRows.Scan(&item.ChrtId, &item.TrackNumber, &item.Price, &item.Rid, &item.Name,
