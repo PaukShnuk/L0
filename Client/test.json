@@ -1,31 +1,31 @@
 {
-  "order_uid": "b563feb7b2b84b6test",
-  "track_number": "WBILMTESTTRACK",
-  "entry": "WBIL",
+  "order_uid": "for test",
+  "track_number": "Bomber",
+  "entry": "WBIllL",
   "delivery": {
-    "name": "Test Testov",
-    "phone": "+9720000000",
-    "zip": "2639809",
-    "city": "Kiryat Mozkin",
-    "address": "Ploshad Mira 15",
-    "region": "Kraiot",
-    "email": "test@gmail.com"
+    "name": "Roman Moshennikov",
+    "phone": "+885553535",
+    "zip": "archive",
+    "city": "Anor Londo",
+    "address": "Lotrika",
+    "region": "05",
+    "email": "ezhzhi@gmail.com"
   },
   "payment": {
-    "transaction": "b563feb7b2b84b6test",
-    "request_id": "",
-    "currency": "USD",
-    "provider": "wbpay",
-    "amount": 1817,
-    "payment_dt": 1637907727,
-    "bank": "alpha",
+    "transaction": "For test too",
+    "request_id": "net",
+    "currency": "CNY",
+    "provider": "kekwpay",
+    "amount": 69999,
+    "payment_dt": 9,
+    "bank": "VTB",
     "delivery_cost": 1500,
     "goods_total": 317,
     "custom_fee": 0
   },
   "items": [
     {
-      "chrt_id": 9934930,
+      "chrt_id": 55,
       "track_number": "WBILMTESTTRACK",
       "price": 453,
       "rid": "ab4219087a764ae0btest",
@@ -34,7 +34,7 @@
       "size": "0",
       "total_price": 317,
       "nm_id": 2389212,
-      "brand": "Vivienne Sabo",
+      "brand": "Vivienne Sabotazh",
       "status": 202
     }
   ],

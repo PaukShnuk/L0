@@ -12,7 +12,8 @@ func main() {
 	mem := model.New()
 	err := GetDataFromDB(mem)
 	if err != nil {
-		log.Fatalf("Init cache error", err)
+		log.Println(fmt.Errorf("init cache error %s", err))
+		return
 	}
 	sc, err := ConnectNatsStream()
 	if err != nil {

@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7659ffb1-f957-4f0d-8c31-c2d2a681168d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Client/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/model.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/sql_func.go" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/sql_func.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

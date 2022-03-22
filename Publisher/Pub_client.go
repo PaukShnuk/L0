@@ -70,7 +70,7 @@ const (
 
 func main() {
 	sc, _ := stan.Connect(clusterName, clientName) // Simple Synchronous Publisher
-	for i := 1; i < 8; i++ {
+	for i := 1; i < 9; i++ {
 		filename := "/home/shnuk/GolandProjects/WB/wb_l0/Publisher/model" + strconv.Itoa(i) + ".json"
 		file, err := os.Open(filename)
 		if err != nil {

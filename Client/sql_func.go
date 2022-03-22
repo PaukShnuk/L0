@@ -19,7 +19,7 @@ func SetDataToDB(data model.Order) error {
 
 	tx, err := db.Begin()
 	if err != nil {
-		log.Println(fmt.Errorf("transaction error", err))
+		log.Println(fmt.Errorf("transaction error %s", err))
 	}
 	defer tx.Rollback()
 
@@ -27,7 +27,7 @@ func SetDataToDB(data model.Order) error {
 		data.Delivery.Phone, data.Delivery.Zip, data.Delivery.City, data.Delivery.Address, data.Delivery.Region,
 		data.Delivery.Email)
 	if err != nil {
-		return fmt.Errorf("Wrong data: %s", err)
+		return fmt.Errorf("wrong data: %s", err)
 	}
 	fmt.Println(result.RowsAffected())
 
@@ -36,7 +36,7 @@ func SetDataToDB(data model.Order) error {
 		data.Payment.PaymentDt, data.Payment.Bank, data.Payment.DeliveryCost, data.Payment.GoodsTotal,
 		data.Payment.CustomFee)
 	if err != nil {
-		return fmt.Errorf("Wrong data: %s", err)
+		return fmt.Errorf("wrong data: %s", err)
 	}
 	fmt.Println(result.RowsAffected())
 
@@ -44,7 +44,7 @@ func SetDataToDB(data model.Order) error {
 		data.TrackNumber, data.Entry, data.Payment.Transaction, data.Locale, data.InternalSignature,
 		data.CustomerId, data.DeliveryService, data.Shardkey, data.SmId, data.DateCreated, data.OofShard)
 	if err != nil {
-		return fmt.Errorf("Wrong data: %s", err)
+		return fmt.Errorf("wrong data: %s", err)
 	}
 	fmt.Println(result.RowsAffected())
 
@@ -54,7 +54,7 @@ func SetDataToDB(data model.Order) error {
 			data.Items[i].Sale, data.Items[i].Size, data.Items[i].TotalPrice, data.Items[i].NmId,
 			data.Items[i].Brand, data.Items[i].Status)
 		if err != nil {
-			return fmt.Errorf("Wrong data: %s", err)
+			return fmt.Errorf("wrong data: %s", err)
 		}
 		fmt.Println(result.RowsAffected())
 	}
@@ -71,7 +71,7 @@ func GetDataFromDB(cache *model.Cashe) error {
 
 	orderRows, err := db.Query(`select * from "order"`)
 	if err != nil {
-		return fmt.Errorf("Error getting rows from orders:", err)
+		return fmt.Errorf("error getting rows from orders: %s", err)
 	}
 	defer orderRows.Close()
 
@@ -83,25 +83,25 @@ func GetDataFromDB(cache *model.Cashe) error {
 			&data.InternalSignature, &data.CustomerId, &data.DeliveryService, &data.Shardkey, &data.SmId, &data.DateCreated,
 			&data.OofShard)
 		if err != nil {
-			return fmt.Errorf("Error reading order from db: ", err)
+			return fmt.Errorf("error reading order from db: %s", err)
 		}
 
 		deliveryRows, err := db.Query("select * from delivery where delivery.id = $1", deliveryId)
 		if err != nil {
-			return fmt.Errorf("Error getting rows from delivery: ", err)
+			return fmt.Errorf("error getting rows from delivery: %s", err)
 		}
 
 		deliveryRows.Next()
 		err = deliveryRows.Scan(&data.Delivery.Phone, &data.Delivery.Zip, &data.Delivery.City, &data.Delivery.Address,
 			&data.Delivery.Region, &data.Delivery.Email, &data.Delivery.Name, &deliveryId)
 		if err != nil {
-			return fmt.Errorf("Error reading delivery from db: ", err)
+			return fmt.Errorf("error reading delivery from db: %s", err)
 		}
 		deliveryRows.Close()
 
 		paymentRows, err := db.Query("select * from payment where payment.transaction = $1", paymentId)
 		if err != nil {
-			return fmt.Errorf("Error getting rows from payment: ", err)
+			return fmt.Errorf("error getting rows from payment: %s", err)
 		}
 
 		paymentRows.Next()
@@ -109,14 +109,14 @@ func GetDataFromDB(cache *model.Cashe) error {
 			&data.Payment.Provider, &data.Payment.Amount, &data.Payment.PaymentDt, &data.Payment.Bank,
 			&data.Payment.DeliveryCost, &data.Payment.GoodsTotal, &data.Payment.CustomFee)
 		if err != nil {
-			return fmt.Errorf("Error reading payment from db: ", err)
+			return fmt.Errorf("error reading payment from db: %s", err)
 		}
 		paymentRows.Close()
 
 		itemsRows, err := db.Query("select chrt_id, track_number, price, rid, name, sale, size,total_price, "+
 			"nm_id, brand, status from items where items.order_uid = $1", data.OrderUid)
 		if err != nil {
-			return fmt.Errorf("Error getting rows from items:", err)
+			return fmt.Errorf("error getting rows from items: %s", err)
 		}
 		data.Items = []model.Items{}
 		for itemsRows.Next() {
@@ -124,7 +124,7 @@ func GetDataFromDB(cache *model.Cashe) error {
 			err = itemsRows.Scan(&item.ChrtId, &item.TrackNumber, &item.Price, &item.Rid, &item.Name,
 				&item.Sale, &item.Size, &item.TotalPrice, &item.NmId, &item.Brand, &item.Status)
 			if err != nil {
-				return fmt.Errorf("Error reading item from db: ", err)
+				return fmt.Errorf("error reading item from db: %s", err)
 			}
 			data.Items = append(data.Items, item)
 		}
